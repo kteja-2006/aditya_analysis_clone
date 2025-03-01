@@ -17,22 +17,20 @@ body {
 
 /*====overall academics=====*/
 
-.overall-academics {
-  text-align: center;
+.overall-fee {
+  position: relative;
   margin-bottom: 20px;
   background: rgba(255, 255, 255, 0.4);
-  
   padding: 20px;
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(8px);
-      overflow: hidden; /* Ensures wave stays inside */
-
 }
 
-.overall-academics h3 {
+.overall-fee h3 {
   font-size: 1.2rem;
-  margin-bottom: 10px;
+  top: 10px;
+  left: 10px;
   text-shadow:0 0 20px #fff, 
         0 0 30px #fff, 
         0 0 40px #fff, 
@@ -40,17 +38,47 @@ body {
     -webkit-text-stroke: .3px #fff; /* White outline */
     color: black;
 }
-
-.overall-academics .overall-percentage {
+.fee-due {
   font-size: 1.5rem;
   font-weight: bold;
   color: #273c75;
 }
 
+.fee-paid {
+  font-size: 1rem;
+  font-weight: 900;
+  position: absolute;
+  right: 90px;
+  bottom: 50px;
+}
 
-/* ======== individual academics ========*/
+.paid {
+  font-size: 1rem;
+  font-weight: 900;
+  position: absolute;
+  left: 92%;
+  bottom: 50px;
+}
 
-.academics-metrics {
+.total-fee{
+  font-size: 1rem;
+  font-weight: 900;
+  position: absolute;
+  right: 90px;
+  bottom: 10px;
+}
+
+.fee{
+  font-size: 1rem;
+  font-weight: 900;
+  position: absolute;
+  left: 92%;
+  bottom: 10px;
+}
+
+
+/* ======== individual fee ========*/
+.fee-metrics {
   text-align: left;
   margin-bottom: 20px;
   background: rgba(255, 255, 255, 0.4);
@@ -58,17 +86,18 @@ body {
   border-radius: 10px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(8px);
-  display: flex;
-  flex-wrap: wrap;
   gap: 20px;
   margin-bottom: 20px;
-
 }
 
-.academics-metrics .card{
-  
-  flex: 1 1 calc(50% - 50px); /* Adjusted for 2 cards in a row */
-  
+.term-wise{
+  margin-top: 10px;
+  padding-left: 5px;
+  padding-right: 50%;
+}
+.fee-metrics .card{
+  margin: 2px;
+  margin-bottom: 10px;
   padding: 10px;
   border: 1px black solid;
   color: black;
@@ -89,24 +118,9 @@ body {
   left: 0 px; /* Align to the left */
 }
 
-.card .subjects{
-  background: rgba(255, 255, 255, 0.5);
-  padding: 10px;
-  border: 0.5px solid black;
-  border-radius: 3px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
-  margin-top: 5px;
-}
 
 
-
-
-
-
-
-
-
-#overallCanvas {
+.overall-fee canva {
     position: absolute;
     bottom: 0;
     left: 0;
