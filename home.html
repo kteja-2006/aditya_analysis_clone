@@ -1,0 +1,155 @@
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Glassmorphism Dashboard</title>
+    <link rel="stylesheet" href="home.css"> <!-- External CSS -->
+    <link rel="stylesheet" type="text/css" href="whole.css">
+    <! ===== font import ====>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  </head>
+  <body>
+    <!-- Main Container -->
+    <div class="container">
+      <!-- Sidebar -->
+      <aside class="sidebar">
+        <h1 class="logo">ADITYA <h6>DEGREE COLLEGE</h6> </h1>
+        <nav>
+          <br>
+          <ul>
+            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="attendance.html">Attendance</a></li>
+            <li><a href="academics.html">Academics</a></li>
+            <li><a href="competetive.html">Competetive</a></li>
+            <li><a href="fee.html">Fees Details</a></li>
+            <li><a href="profile.html">Profile</a></li>
+          </ul>
+        </nav>
+      </aside>
+
+      <!-- Main Dashboard -->
+      <main class="page">
+        <header class="header">
+          <h2>Student Dashboard</h2>
+          <div class="profile">
+            <img src="teja.jpg" alt="Profile Picture">
+            <p>K.Y.S.Teja</p>
+          </div>
+        </header>
+
+
+        <section class="metrics">
+            <div class="card attendance-card">
+              <h3 class="attendance-title">Attendance</h3>
+              <p id="attendancePercentage">50%</p>
+              <p class="attendance-days">30/60</p> <!-- New dynamic info -->
+              <canvas id="attendanceWave" width="150" height="100"></canvas>
+            </div>
+
+          <div class="card">
+            <h3>Academics</h3>
+            <p id="academicsPercentage">70%</p>
+            <canvas id="academicsWave" width="150" height="100"></canvas>
+          </div>
+
+
+          <div class="card">
+            <h3>Fee Due</h3>
+            <p id="feePercentage">₹25000</p>
+            <p class="fee-due">25000/45000</p> <!-- New dynamic info -->
+            <canvas id="feeWave" width="150" height="100"></canvas>
+          </div>
+        </section>
+
+        <section class="student-details">
+          <h3>Student Information</h3>
+          <p>SUC Code: <p1>2350250355</p1></p>
+          <p>Section: <p1>Bsc-Data science</p1></p>
+          <p>Mobile: <p1>******1234</p1></p>
+          <p>Institute: <p1>Aditya Degree College, Tadepalligudem</p1></p>
+          <p>Email: <p1>mailofstudent@gmail.com</p1></p>
+        </section>
+      </main>
+    </div>
+
+    <script>
+    const canvasAttendance = document.getElementById("attendanceWave");
+    const ctxAttendance = canvasAttendance.getContext("2d");
+
+    const canvasAcademics = document.getElementById("academicsWave");
+    const ctxAcademics = canvasAcademics.getContext("2d");
+
+    const canvasFee = document.getElementById("feeWave");
+    const ctxFee = canvasFee.getContext("2d");
+
+    let waveOffset = 0; // For wave animation
+
+   function drawWave(ctx, canvas, percentage) {
+    const width = canvas.width;
+    const height = canvas.height;
+    const waveHeight = 10; // Height of the wave
+    const waterHeight = height * (1 - percentage / 100); // Adjust wave based on percentage
+
+    ctx.clearRect(0, 0, width, height);
+
+    // Calculate Neon Gradient Color Based on Percentage
+    const red = Math.floor(255 - (percentage * 2.55));
+    const green = Math.floor(percentage * 2.55);
+    const neonColor = `rgb(${red}, ${green}, 50)`; // Green to Red transition
+
+    // Wave
+    ctx.fillStyle = neonColor; // Apply neon color
+    ctx.shadowColor = neonColor; // Remove for debugging
+    ctx.shadowBlur = 20;
+
+
+    ctx.beginPath();
+    for (let x = 0; x <= width; x++) {
+        const y = Math.sin((x + waveOffset) * 0.05) * waveHeight + waterHeight;
+        ctx.lineTo(x, y);
+    }
+    ctx.lineTo(width, height);
+    ctx.lineTo(0, height);
+    ctx.closePath();
+    ctx.fill();
+
+    waveOffset += 0.5; // Increment for animation
+}
+
+
+
+    function updatePercentageDisplay(percentage, elementId) {
+
+    const element = document.getElementById(elementId);
+    element.style.color = "#ffffff";
+    element.style.textShadow = `0 0 10px #ff4081, 0 0 20px #ff4081, 0 0 30px #ff4081, 0 0 40px #ff4081`; // Neon pinkish
+    }
+
+
+    function animateWave() {
+    const attendancePercentage = 50; // Example dynamic percentage
+    const academicsPercentage = 70; 
+    const feePercentage = (25000 / 45000) * 100;
+
+
+
+    drawWave(ctxAttendance, canvasAttendance, attendancePercentage);
+    drawWave(ctxAcademics, canvasAcademics, academicsPercentage);
+    drawWave(ctxFee, canvasFee, feePercentage);
+
+    updatePercentageDisplay(attendancePercentage, "attendancePercentage");
+    updatePercentageDisplay(academicsPercentage, "academicsPercentage");
+    updatePercentageDisplay(feePercentage, "feePercentage");
+
+    requestAnimationFrame(animateWave);
+  }
+
+      animateWave();
+
+
+  </script>
+
+  </body>
+  </html>

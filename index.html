@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <!--=============== REMIXICONS ===============-->
+   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+   <!--=============== CSS ===============-->
+   <link rel="stylesheet" href="./style.css">
+   <link rel="stylesheet" href="./bg.css">
+
+   <title>Login Page</title>
+</head>
+<body>
+   <!======background=====>
+   <div class="login" id="login-page"> <!-- Added the id="login" -->
+      <div class="background">
+         <div class="wrapper">
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+         </div>
+
+         <div class="banner">
+            <div class="content"></div>
+         </div>
+      </div>
+      <!============>
+
+      <form action="" class="container" id="login-form">
+         <h1 class="login__title">Login</h1>
+
+         <div class="login__content">
+            <!-- Suc Code Input -->
+            <div class="login__box">
+               <i class="ri-user-3-line login__icon"></i>
+               <div class="login__box-input">
+                  <div class="suc-code-overlay" id="login-suc-overlay"></div> <!-- Overlay for colored digits -->
+                  <input type="text" required class="login__input" id="login-suc" placeholder=" " maxlength="10">
+                  <label for="login-suc" class="login__label">Suc Code</label>
+               </div>
+            </div>
+
+            <div class="login__box">
+               <i class="ri-lock-2-line login__icon"></i>
+               <div class="login__box-input">
+                  <div class="password-overlay"></div> <!-- Overlay for colored password text -->
+                  <input type="password" required class="login__input" id="login-pass" placeholder=" ">
+                  <label for="login-pass" class="login__label">Password</label>
+                  <i class="ri-eye-off-line login__eye" id="login-eye"></i>
+               </div>
+            </div>
+         </div>
+
+         <div class="login__check">
+            <div class="login__check-group">
+               <input type="checkbox" class="login__check-input" id="login-check">
+               <label for="login-check" class="login__check-label">Remember me</label>
+            </div>
+
+            <a href="#" class="login__forgot">Forgot Password?</a>
+         </div>
+
+         <button type="submit" class="login__button" id="loginButton">Login</button>
+         <div id="errorMessage" style="color: red; display: none;">Incorrect Suc ID or Password. Please try again.</div>
+
+         <p class="login__register">
+            Can't find suc code? <a href="#">Click here</a>
+         </p>
+      </form>
+   </div>
+
+   <!-- Scripts -->
+   <script>
+      // Predefined valid credentials (you can replace this with backend validation)
+      const validSucId = "2350250355"; // Example Suc ID
+      const validPassword = "0355"; // Example Password
+
+      // Add event listener for form submission
+      // Add event listener for form submission
+document.getElementById("login-form").addEventListener("submit", function (event) {
+   event.preventDefault(); // Prevent form from submitting and reloading the page
+
+   // Get input values
+   const sucId = document.getElementById("login-suc").value.trim();
+   const password = document.getElementById("login-pass").value.trim();
+
+   // Check if credentials are valid
+   if (sucId === validSucId && password === validPassword) {
+      // Add fade-out animation to the login section
+      const loginSection = document.getElementById("login-page");
+      loginSection.style.animation = "fadeOut 1s forwards";
+
+      // Redirect to another page after the animation completes
+      setTimeout(function () {
+         window.location.href = "home.html"; // External Dashboard page
+      }, 250); // Wait 1 second for the fade-out animation
+   } else {
+      // Show error message
+      document.getElementById("errorMessage").style.display = "block";
+
+      // Clear the input areas
+      document.getElementById("login-suc").value = "";
+      document.querySelector(".suc-code-overlay").innerHTML = "";
+      document.getElementById("login-pass").value = "";
+   }
+});
+
+
+      // Toggle password visibility when the eye icon is clicked
+      const eyeIcon = document.getElementById('login-eye');
+      const passwordInput = document.getElementById('login-pass');
+
+      eyeIcon.addEventListener('click', function () {
+         if (passwordInput.type === 'password') {
+            passwordInput.type = 'text'; // Reveal the password
+            eyeIcon.classList.remove('ri-eye-off-line'); // Change to 'open' icon
+            eyeIcon.classList.add('ri-eye-line');
+         } else {
+            passwordInput.type = 'password'; // Hide the password
+            eyeIcon.classList.remove('ri-eye-line'); // Change to 'closed' icon
+            eyeIcon.classList.add('ri-eye-off-line');
+         }
+      });
+
+      // Validate Suc Code input when it loses focus (blur event)
+      const sucCodeInput = document.getElementById('login-suc');
+      const sucCodeLabel = document.querySelector('label[for="login-suc"]');
+      const colors = ['#FF5733', '#33FF57', '#3357FF', '#F0FF33', '#FF33A1', '#33FFF7', '#FF9133', '#F733FF', '#33FF9C', '#33BFFF'];
+
+      sucCodeInput.addEventListener('blur', function () {
+         if (sucCodeInput.value.trim().length > 0) {
+            sucCodeLabel.classList.remove('error');
+            sucCodeLabel.classList.add('success');
+         } else {
+            sucCodeLabel.classList.remove('success');
+            sucCodeLabel.classList.add('error');
+         }
+      });
+
+      // Color each digit of Suc Code dynamically on input
+      sucCodeInput.addEventListener('input', function () {
+         const value = sucCodeInput.value;
+         let coloredHTML = '';
+
+         for (let i = 0; i < value.length; i++) {
+            const digit = value[i];
+            const color = colors[i % colors.length];
+            coloredHTML += `<span style="color: ${color};">${digit}</span>`;
+         }
+
+         document.querySelector('.suc-code-overlay').innerHTML = coloredHTML;
+      });
+   </script>
+</body>
+</html>

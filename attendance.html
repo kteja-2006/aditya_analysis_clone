@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Attendance</title>
+  <link rel="stylesheet" href="attendance.css"> <!-- Link to updated CSS -->
+  <link rel="stylesheet" type="text/css" href="whole.css">
+  <! ===== font import ====>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+</head>
+<body>
+  <!-- Main Container -->
+  <div class="container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h1 class="logo">ADITYA <h6>DEGREE COLLEGE</h6> </h1>
+      <nav>
+        <br>
+        <ul>
+          <li><a href="home.html">Dashboard</a></li>
+          <li><a href="" class="active">Attendance</a></li>
+          <li><a href="academics.html">Academics</a></li>
+          <li><a href="competetive.html">Competetive</a></li>
+          <li><a href="fee.html">Fees details</a></li>
+          <li><a href="profile.html">Profile</a></li>
+        </ul>
+      </nav>
+    </aside>
+
+    <!-- Main Attendance Content -->
+    <main class="page">
+      <section class="header" id="attendanceWave">
+        <h2>Attendance</h2>
+        <div class="profile">
+          <img src="teja.jpg" alt="Profile Picture">
+          <p>K.Y.S.Teja</p>
+        </div>
+      </section>
+
+      <!-- Overall Attendance Section -->
+      <section class="overall-attendance">
+        <h3>Overall Attendance</h3>
+        <p class="overall-percentage">95%</p>
+        <canvas id="overallCanvas" width="150" height="50"></canvas>
+      </section>
+
+      <!-- Individual Metrics -->
+      <section class="attendance-metrics">
+        <div class="card">
+          <h3>January</h3>
+          <p class="attendance-percentage">90%</p>
+          <p class="attendance-days">27/30 days</p>
+           <div class="fill-bar"></div>
+        </div>
+
+        <div class="card">
+          <h3>February</h3>
+          <p class="attendance-percentage">98%</p>
+          <p class="attendance-days">29/30 days</p>
+          <div class="fill-bar"></div>
+        </div>
+
+        <div class="card">
+          <h3>March</h3>
+          <p class="attendance-percentage">85%</p>
+          <p class="attendance-days">25/30 days</p>
+          <div class="fill-bar"></div>
+        </div>
+
+        <div class="card">
+          <h3>April</h3>
+          <p class="attendance-percentage">92%</p>
+          <p class="attendance-days">28/30 days</p>
+          <div class="fill-bar"></div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+
+  <script type="text/javascript">
+document.addEventListener("DOMContentLoaded", function () {
+    const overallPercentage = 95; // Example overall attendance
+    const canvasOverall = document.getElementById("overallCanvas");
+
+    if (canvasOverall) {
+        const ctx = canvasOverall.getContext("2d");
+        animateWave(ctx, canvasOverall, overallPercentage, true);
+    }
+
+    function animateWave(ctx, canvas, percentage, isOverall) {
+        let waveOffset = 0;
+
+        function drawWave() {
+            const width = canvas.width;
+            const height = canvas.height;
+            const waveHeight = 10;
+            const waterHeight = height * (1 - percentage / 100);
+
+            ctx.clearRect(0, 0, width, height);
+
+            let fillColor;
+            if (isOverall) {
+                const red = Math.floor(255 - (percentage * 2.55));
+                const green = Math.floor(percentage * 2.55);
+                fillColor = `rgb(${red}, ${green}, 50)`;
+            } else {
+                const blueIntensity = Math.floor(percentage * 2.55);
+                fillColor = `rgb(0, ${blueIntensity}, ${blueIntensity})`;
+            }
+
+            ctx.fillStyle = fillColor;
+            ctx.shadowColor = fillColor;
+            ctx.shadowBlur = 10;
+
+            ctx.beginPath();
+            for (let x = 0; x <= width; x++) {
+                const y = Math.sin((x + waveOffset) * 0.05) * waveHeight + waterHeight;
+                ctx.lineTo(x, y);
+            }
+            ctx.lineTo(width, height);
+            ctx.lineTo(0, height);
+            ctx.closePath();
+            ctx.fill();
+
+            waveOffset += 2;
+            requestAnimationFrame(drawWave);
+        }
+
+        drawWave();
+    }
+
+    function fillAttendanceCards() {
+        document.querySelectorAll(".attendance-metrics .card").forEach(card => {
+            const percentage = parseInt(card.querySelector(".attendance-percentage").textContent);
+            const blueIntensity = Math.floor(percentage * 2.55);
+            const fillColor = `rgb(0, ${blueIntensity}, ${blueIntensity})`;
+
+            const fillDiv = document.createElement("div");
+            fillDiv.style.position = "absolute";
+            fillDiv.style.bottom = "0";
+            fillDiv.style.left = "0";
+            fillDiv.style.width = "100%";
+            fillDiv.style.height = `${percentage}%`; // Fill dynamically
+            fillDiv.style.background = fillColor;
+            fillDiv.style.borderBottomLeftRadius = "10px";
+            fillDiv.style.borderBottomRightRadius = "10px";
+            fillDiv.style.transition = "height 0.5s ease-in-out";
+
+            card.appendChild(fillDiv);
+        });
+    }
+
+    fillAttendanceCards();
+});
+
+  </script>
+
+</body>
+</html>

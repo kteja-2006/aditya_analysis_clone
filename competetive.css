@@ -1,0 +1,35 @@
+/*==== Fade-in Animation ====*/
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+body {
+  animation: fadeIn 1.5s forwards;
+}
+
+
+
+
+/*====overall attendance=====*/
+
+.overall-competetive {
+  text-align: center;
+  margin-bottom: 20px;
+  background: rgba(255, 255, 255, 0.4);
+  
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(8px);
+}
+
+.overall-competetive h1 {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
